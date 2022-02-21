@@ -1,11 +1,28 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
 
-html, body {
-    font-family: 'Roboto', sans-serif;
-  }
+html,
+body {
+  font-family: "Roboto", sans-serif;
+  height: 100vh;
+}
 
 #app {
-    font-family: 'Roboto', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.navBar {
+  height: 100vh;
+  background-color: #eef5f2 !important;
+}
+.logoClass {
+  margin-left: 200px !important;
+} 
+
+#footerSection {
+  position: absolute;
+  bottom: -10 !important;
+  width: 100% !important;
+  height: 60px;
+  background: #eef5f2 !important;
+}
