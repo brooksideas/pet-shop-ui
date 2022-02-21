@@ -1,5 +1,5 @@
 <template slot="side">
-  <div style="margin-top: 100px">
+  <div>
     <v-app>
       <v-navigation-drawer
         v-model="sidebarMenu"
@@ -9,45 +9,47 @@
         :mini-variant.sync="mini"
         class="navBar"
       >
-        <v-list dense color="primary" dark>
-          <v-list-item-group>
-            <v-list-item>
-              <v-list-item-action class="logoClass">
-                <v-icon @click.stop="sidebarMenu = !sidebarMenu"
-                  >mdi-paw</v-icon
-                >
+        <v-list class="logoHeight" dense color="primary" dark>
+          <v-list-item-group class="logoClass">
+            <v-list-item class="px-0">
+              <v-list-item-action>
+                <v-row>
+                  <v-icon
+                    class="logoIcon"
+                    @click.stop="sidebarMenu = !sidebarMenu"
+                    >mdi-paw</v-icon
+                  >
+                  <label class="ml-2 white--text logoName"> petson. </label>
+                </v-row>
               </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title v-text="petson"></v-list-item-title>
-              </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
         </v-list>
 
-        <v-divider></v-divider>
-        <v-list>
-          <v-list-item
-            v-for="item in items"
-            :key="item.title"
-            :to="{ name: item.link }"
-          >
-            <template>
-              <v-list-item-icon>
-                <v-icon v-bind="attrs" v-on="on" color="primary">{{
-                  item.icon
-                }}</v-icon>
-              </v-list-item-icon>
-            </template>
-            <span>{{ item.tooltip }}</span>
+        <v-list class="navBarList px-0 py-0">
+          <v-list-item-group active-class="navBarListActive">
+            <v-list-item 
+              v-for="item in items"
+              :key="item.title"
+              :to="{ name: item.link }"
+            >
+              <template>
+                <v-list-item-icon>
+                  <v-icon v-bind="attrs" v-on="on" color="grey">{{
+                    item.icon
+                  }}</v-icon>
+                </v-list-item-icon>
+              </template>
 
-            <template>
-              <v-list-item-content v-bind="attrs" v-on="on">
-                <v-list-item-title class="primary--text">{{
-                  item.title
-                }}</v-list-item-title>
-              </v-list-item-content>
-            </template>
-          </v-list-item>
+              <template>
+                <v-list-item-content v-bind="attrs" v-on="on">
+                  <v-list-item-title class="grey--text">{{
+                    item.title
+                  }}</v-list-item-title>
+                </v-list-item-content>
+              </template>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
     </v-app>
@@ -69,28 +71,28 @@ export default {
     items: [
       {
         title: "Dashboard",
-        link: "#",
-        icon: "mdi-home-outline",
+        link: "",
+        icon: "mdi-tune",
       },
       {
         title: "All tickets",
         link: "#",
-        icon: "mdi-newspaper-variant-outline",
+        icon: "mdi-credit-card ",
       },
       {
         title: "Shipment Locator",
         link: "#",
-        icon: "mdi-account-outline",
+        icon: "mdi-map-marker ",
       },
       {
         title: "Customers",
         link: "#",
-        icon: "mdi-bullhorn-outline",
+        icon: "mdi-account-multiple-outline ",
       },
       {
         title: "Products",
         link: "#",
-        icon: "mdi-cash-usd-outline",
+        icon: "mdi-folder-outline ",
       },
     ],
   }),

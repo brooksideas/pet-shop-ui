@@ -2,23 +2,134 @@
 
 html,
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", sans-serif !important;
   height: 100vh;
+  font-size: 16px;
 }
 
 #app {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 .navBar {
   height: 100vh;
+  width: 16.25rem !important;
   background-color: #eef5f2 !important;
 }
-.logoClass {
-  margin-left: 200px !important;
+.navBarList {
+  background-color: #eef5f2 !important;
+  margin-top: 0rem !important;
+  padding-left: 0rem !important;
+}
+.navBarListActive {
+  background-color: #eef5f2 !important;
+  color: #eef5f2 !important;
+  padding-top: 0rem;
+  margin-top: 0rem !important;
+  padding: 0;
+}
+.navBarListActive:hover {
+  background-color: #4ec690 !important;
+  color: #ffffff !important;
+  padding-top: 0rem;
 } 
+.logoClass {
+  margin-left: 9.5rem !important;
+  height: 5rem !important;
+}
+.logoHeight {
+  height: 5rem !important;
+  margin-bottom: 0rem;
+}
+.logoIcon {
+  width: 1.938rem;
+  height: 1.813rem;
+}
+.logoName {
+  font-size: 1rem;
+  margin-left: 0.813rem;
+  font-weight: 300;
+  line-height: 2rem;
+  font-style: normal;
+  letter-spacing: 0.009rem;
+}
 
+.topBarContainer {
+  height: 5rem !important;
+}
+.productsBtn {
+  margin-left: 11.68em !important;
+  width: 3.633em;
+  height: 0.965em;
+}
+.productsBtnLabel {
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  font-style: normal;
+  letter-spacing: 0.009rem;
+}
+.productsBtnIcon {
+  width: 0.4rem;
+  height: 0.247rem;
+}
+.promotionsBtn {
+  margin-left: 7.625rem;
+  width: 4.333em;
+  height: 1.066em;
+}
+.promotionsBtnLabel {
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  font-style: normal;
+  letter-spacing: 0.009rem;
+}
+.blogBtn {
+  margin-left: 7.625rem;
+  width: 3.188rem;
+  height: 2rem;
+}
+.blogBtnLabel {
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  font-style: normal;
+  letter-spacing: 0.009rem;
+}
+.cartBtn {
+  margin-left: 1.5rem;
+  width: 8.375rem;
+  height: 3rem;
+}
+.cartBtnIcon {
+  width: 1.146rem;
+  height: 1.146rem;
+}
+.cartBtnLabel {
+  font-weight: 500;
+  font-size: 0.938rem;
+  line-height: 1.625rem;
+  font-style: normal;
+  letter-spacing: 0.029rem;
+}
+.loginBtn {
+  margin-left: 1.5rem;
+  width: 6.5rem;
+  height: 3rem;
+}
+.loginLabel {
+  font-weight: 500;
+  font-size: 0.938rem;
+  line-height: 1.625rem;
+  font-style: normal;
+  letter-spacing: 0.029rem;
+}
+
+.avatarBtn {
+  margin-left: 1.5rem;
+}
 #footerSection {
   position: absolute;
   bottom: -10 !important;

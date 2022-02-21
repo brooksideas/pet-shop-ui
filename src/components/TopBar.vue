@@ -1,38 +1,33 @@
 <template>
   <div id="topBar">
     <v-app>
-      <v-app-bar app color="primary" dark elevation="0">
-        <v-row align="center" justify="center">
-          <v-col cols="4" sm="4" md="4" lg="4">
-            <v-btn text color="primary" elevation="0">
-              <label class="white--text"> Products</label>
-              <v-icon right> mdi-chevron-down </v-icon>
-            </v-btn>
-          </v-col>
-
-          <v-col cols="4" sm="4" md="4" lg="4">
-            <v-btn text color="primary" elevation="0">
-              <label class="white--text"> Promotions</label>
-            </v-btn>
-          </v-col>
-
-          <v-col cols="4" sm="4" md="4" lg="4">
-            <v-btn text color="primary" elevation="0">
-              <label class="white--text"> Blog</label>
-            </v-btn>
-          </v-col>
-        </v-row>
+      <v-app-bar class="topBarContainer" app color="primary" dark elevation="0">
+        <v-btn class="productsBtn" text color="primary" elevation="0">
+          <label class="white--text productsBtnLabel"> Products</label>
+          <v-icon right color="white" class="productsBtnIcon">
+            mdi-chevron-down
+          </v-icon>
+        </v-btn>
+        <v-btn class="promotionsBtn" text color="primary" elevation="0">
+          <label class="white--text promotionsBtnLabel"> Promotions</label>
+        </v-btn>
+        <v-btn class="blogBtn" text color="primary" elevation="0">
+          <label class="white--text blogBtnLabel"> Blog</label>
+        </v-btn>
         <v-spacer></v-spacer>
-        <v-icon right> mdi-cart </v-icon>
-        <v-btn outlined color="white" elevation="0">
-          <label class="white--text"> Cart ({{ cartItems }})</label>
+
+        <v-btn class="cartBtn" outlined color="white" elevation="0">
+          <v-icon left class="cartBtnIcon"> mdi-cart </v-icon>
+          <label class="white--text cartBtnLabel">
+            Cart ({{ cartItems }})</label
+          >
         </v-btn>
 
-        <v-btn outlined color="white" elevation="0">
-          <label class="white--text"> logout</label>
+        <v-btn class="loginBtn" outlined color="white" elevation="0">
+          <label class="white--text loginBtnLabel"> logout</label>
         </v-btn>
 
-        <v-avatar color="secondary" size="48"></v-avatar>
+        <v-avatar class="avatarBtn" color="secondary" size="48"></v-avatar>
       </v-app-bar>
     </v-app>
   </div>
