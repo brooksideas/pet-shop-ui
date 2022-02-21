@@ -23,8 +23,17 @@
           >
         </v-btn>
 
-        <v-btn class="loginBtn" outlined color="white" elevation="0">
-          <label class="white--text loginBtnLabel"> logout</label>
+        <v-btn
+          class="loginBtn"
+          outlined
+          color="white"
+          elevation="0"
+          @click="openLoginModal"
+        >
+          <label class="white--text loginBtnLabel"> login</label>
+          <div v-if="showLoginModal">
+          <modal-builder :injectForm="injectLoginForm"> </modal-builder>
+          </div>
         </v-btn>
 
         <v-avatar class="avatarBtn" color="secondary" size="48"></v-avatar>
@@ -32,11 +41,23 @@
     </v-app>
   </div>
 </template>
-<script>
+<script> 
+import ModalBuilder from "@/components/ModalBuilder.vue";
+
 export default {
   name: "TopBar",
+  components:{ModalBuilder},
   data: () => ({
     cartItems: 0,
+    showLoginModal: false,
+    injectLoginForm: 1,
   }),
+  methods: { 
+
+    // Injects the login form and displays the dialog
+    openLoginModal() {
+      this.showLoginModal = true;
+    },
+  },
 };
 </script>
