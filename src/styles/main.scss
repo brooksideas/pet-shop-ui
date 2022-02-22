@@ -3,10 +3,11 @@
 html,
 body {
   font-family: "Roboto", sans-serif !important;
-  height: 100vh;
   font-size: 16px;
 }
-
+.v-application--wrap {
+  min-height: auto;
+}
 #app {
   font-family: "Roboto", sans-serif !important;
   -webkit-font-smoothing: antialiased;
@@ -33,7 +34,7 @@ body {
   background-color: #4ec690 !important;
   color: #ffffff !important;
   padding-top: 0rem;
-} 
+}
 .logoClass {
   margin-left: 9.5rem !important;
   height: 5rem !important;
@@ -129,8 +130,8 @@ body {
 
 .avatarBtn {
   margin-left: 1.5rem;
-} 
-.v-dialog{
+}
+.v-dialog {
   overflow-x: initial !important;
   overflow-y: initial !important;
 }
@@ -141,6 +142,6 @@ body {
   height: 60px;
   background: #eef5f2 !important;
 }
-.cursor{
+.cursor {
   cursor: pointer;
 }
