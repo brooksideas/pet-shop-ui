@@ -3,9 +3,9 @@
     <v-card class="py-0 my-0 cardRadius" max-width="542px" max-height="600px">
       <v-row justify="center">
         <v-spacer> </v-spacer>
-         <div  class="closeClass" >
+        <div class="closeClass">
           <v-icon color="grey" size="1.5rem"> mdi-close </v-icon>
-         </div>
+        </div>
         <v-col class="loginClass" cols="12" sm="12" md="12" lg="12">
           <v-avatar size="92" color="primary">
             <div class="container">
@@ -92,23 +92,43 @@
           </v-col>
 
           <v-col cols="6" sm="6" md="6">
-            <label
-              @click="$router.push('/forgot-password')"
-              class="blue--text mb-n4 cursor ml-3"
+            <label @click="openSignupModal" class="blue--text mb-n4 cursor ml-3"
               >Don’t have an account? Sign Up</label
             >
+            <div v-if="showSignupModal">
+              <modal-builder :injectForm="injectSignupForm"> </modal-builder>
+            </div>
           </v-col>
-        </v-row> 
+        </v-row>
       </v-card-text>
     </v-card>
   </v-row>
 </template>
 <script>
 import "@/styles/login.scss";
+import { required, email } from "vuelidate/lib/validators";
 
 export default {
   name: "LoginForm",
+  components: {},
+  computed: {
+    emailErrors() {
+      const errors = [];
+      if (!this.$v.email.$dirty) return errors;
+      !this.$v.email.required && errors.push("email is required");
+      !this.$v.email.email && errors.push("valid email is required");
+      return errors;
+    },
+    passwordErrors() {
+      const errors = [];
+      if (!this.$v.password.$dirty) return errors;
+      !this.$v.password.required && errors.push("password is required");
+      return errors;
+    },
+  },
   data: () => ({
+    showSignupModal: false,
+    injectSignupForm: 2,
     email: "",
     password: "",
     loading: false,
@@ -116,5 +136,21 @@ export default {
     iconColor: "orange",
     browserTip: "browser-tip",
   }),
+
+  methods: {
+    // Injects the signup (number 2 indicates the second form) form and displays the dialog
+    openSignupModal() {
+      this.showSignupModal = true;
+    },
+  },
+  validations: {
+    email: {
+      required,
+      email,
+    },
+    password: {
+      required,
+    },
+  },
 };
 </script>
