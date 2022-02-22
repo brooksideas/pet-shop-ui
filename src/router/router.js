@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 // import routes
 import Layout from "@/layouts/Layout.vue";
+import MainPage from "@/pages/MainPage.vue";
 
 Vue.use(VueRouter);
 
@@ -10,7 +11,13 @@ const routes = [
     path: "/",
     name: "layout",
     component: Layout,
-    children: [],
+    children: [
+      {
+        path: "/main-page",
+        name: "main-page",
+        component: MainPage,
+      },
+    ],
   },
 ];
 
