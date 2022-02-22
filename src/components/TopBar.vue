@@ -32,31 +32,41 @@
         >
           <label class="white--text loginBtnLabel"> login</label>
           <div v-if="showLoginModal">
-          <modal-builder :injectForm="injectLoginForm"> </modal-builder>
+            <modal-builder :injectForm="injectLoginForm"> </modal-builder>
           </div>
         </v-btn>
 
-        <v-avatar class="avatarBtn" color="secondary" size="48"></v-avatar>
+        <v-avatar @click="openSettingModal" class="avatarBtn cursor" color="secondary" size="48">
+          <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+              <div v-if="showSettingModal">
+            <modal-builder :injectForm="injectSettingForm"> </modal-builder>
+          </div>
+        </v-avatar>
       </v-app-bar>
     </v-app>
   </div>
 </template>
-<script> 
+<script>
 import ModalBuilder from "@/components/ModalBuilder.vue";
 
 export default {
   name: "TopBar",
-  components:{ModalBuilder},
+  components: { ModalBuilder },
   data: () => ({
     cartItems: 0,
     showLoginModal: false,
+    showSettingModal: false,
     injectLoginForm: 1,
+    injectSettingForm: 3
   }),
-  methods: { 
-
+  methods: {
     // Injects the login form and displays the dialog
     openLoginModal() {
       this.showLoginModal = true;
+    },
+     // Injects the User Settings form and displays the dialog
+    openSettingModal() {
+      this.showSettingModal = true;
     },
   },
 };

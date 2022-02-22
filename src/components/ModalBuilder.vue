@@ -9,8 +9,11 @@
     <div v-if="injectLogin" slot="content">
       <login-form />
     </div>
-     <div v-if="injectSignUp" slot="content">
+    <div v-if="injectSignUp" slot="content">
       <signup-form />
+    </div>
+    <div v-if="injectSettings" slot="content">
+      <user-setting-form />
     </div>
   </modal-container>
 </template>
@@ -21,6 +24,7 @@
 import ModalContainer from "@/components/ModalContainer.vue";
 import LoginForm from "@/forms/LoginForm.vue";
 import SignupForm from "@/forms/SignupForm.vue";
+import UserSettingForm from "@/forms/UserSettingForm.vue";
 import { mapFields } from "vuex-map-fields";
 
 export default {
@@ -28,7 +32,8 @@ export default {
   components: {
     ModalContainer,
     LoginForm,
-    SignupForm
+    SignupForm,
+    UserSettingForm
   },
   computed: {
     ...mapFields("auth", ["openLoginDialog"]),
@@ -51,8 +56,8 @@ export default {
           this.injectSignUp = false;
           this.injectSettings = false;
           this.openDialog = true;
-          this.dialogContainerWidth = "542px";
-          this.dialogContainerHeight = "600px";
+          this.dialogContainerWidth = "33.875rem";
+          this.dialogContainerHeight = "37.5rem";
           return;
         case 2:
           this.injectLogin = false;
@@ -67,6 +72,8 @@ export default {
           this.injectSignUp = false;
           this.injectSettings = true;
           this.openDialog = true;
+          this.dialogContainerWidth = "68.313rem";
+          this.dialogContainerHeight = "47.875rem";
           return;
         default:
           return;
