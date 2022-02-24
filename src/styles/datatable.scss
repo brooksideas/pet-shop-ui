@@ -5,13 +5,14 @@
   font-style: normal;
   letter-spacing: 0.009rem;
   padding-right: 13.875rem;
+  white-space: nowrap;
 }
 .v-data-table-header th {
   font-size: 0.875rem !important;
   font-weight: 500 !important;
   line-height: 1.374rem;
   font-style: normal;
-  letter-spacing: 0.006rem;
+  letter-spacing: 0.006rem; 
 }
 .v-chip .v-chip__content {
   color: #ffffff !important;
@@ -29,4 +30,105 @@
 .downloadIconClass {
     background-color: #DDE3E2;
     // padding: 1.875rem !important;
+}
+.avatarDataTable{
+  padding-left: 0rem !important;
+  margin-left: 0rem !important;
+}
+.nameLabel {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.251rem;
+  font-style: normal;
+  letter-spacing: 0.009rem;
+  padding-right: 3.313rem;
+  // margin-right:.313rem;
+  white-space: nowrap;
+} 
+
+.emailLabel{
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.251rem;
+  font-style: normal;
+  letter-spacing: 0.009rem;
+  padding-right:3.313rem;
+  margin-top: -2.5rem;
+  white-space: nowrap;
+}
+
+.phoneLabel{
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.251rem;
+  font-style: normal;
+  letter-spacing: 0.009rem;
+  padding-right:3.313rem;
+  margin-top: 0.5rem;
+  white-space: nowrap;
+}
+
+.addressLabel{
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.251rem;
+  font-style: normal;
+  letter-spacing: 0.009rem;
+  padding-right:3.313rem;
+  margin-top: 0rem;
+  white-space: nowrap;
+}
+
+.addressSubLabel{
+  font-size:0.75rem;
+  font-weight: 400;
+  line-height: 1.245rem;
+  font-style: normal;
+  letter-spacing: 0.025rem;
+  padding-right:0rem !important;
+  padding-top: 0rem !important;
+  margin-top: 0rem;
+  white-space: nowrap;
+}
+
+.createdLabel{
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.251rem;
+  font-style: normal;
+  letter-spacing: 0.009rem;
+  padding-right:3.313rem;
+  margin-top: 0rem;
+  white-space: nowrap;
+}
+
+.preferenceLabel{
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.251rem;
+  font-style: normal;
+  letter-spacing: 0.009rem;
+  padding-right:3.313rem;
+  margin-top: -2.5rem;
+  white-space: nowrap;
+} 
+
+.actionsActiveClass{
+  width: 12.5rem !important;
+  padding-right: 1rem !important;
+}
+.actionsInactiveClass{
+  width: 12.5rem !important;
+  padding-left: 8.8rem !important;
+}
+
+.activeActionBtn{
+  background-color: #4EC690;
+  margin-right: 1rem !important;
+}
+
+.inactiveActionBtn{
+  background-color: #DDE3E2;
+  margin-right: 1rem !important;
+
 }
