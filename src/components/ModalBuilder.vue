@@ -15,6 +15,9 @@
     <div v-if="injectSettings" slot="content">
       <user-setting-form />
     </div>
+    <div v-if="injectCustomer" slot="content">
+      <customer-form />
+    </div>
   </modal-container>
 </template>
 
@@ -25,6 +28,7 @@ import ModalContainer from "@/components/ModalContainer.vue";
 import LoginForm from "@/forms/LoginForm.vue";
 import SignupForm from "@/forms/SignupForm.vue";
 import UserSettingForm from "@/forms/UserSettingForm.vue";
+import CustomerForm from "@/forms/CustomerForm.vue";
 import { mapFields } from "vuex-map-fields";
 
 export default {
@@ -33,7 +37,8 @@ export default {
     ModalContainer,
     LoginForm,
     SignupForm,
-    UserSettingForm
+    UserSettingForm,
+    CustomerForm,
   },
   computed: {
     ...mapFields("auth", ["openLoginDialog"]),
@@ -43,6 +48,7 @@ export default {
     injectLogin: false,
     injectSignUp: false,
     injectSettings: false,
+    injectCustomer: false,
     dialogContainerWidth: "",
     dialogContainerHeight: "",
   }),
@@ -55,6 +61,7 @@ export default {
           this.injectLogin = true;
           this.injectSignUp = false;
           this.injectSettings = false;
+          this.injectCustomer = false;
           this.openDialog = true;
           this.dialogContainerWidth = "33.875rem";
           this.dialogContainerHeight = "37.5rem";
@@ -63,6 +70,7 @@ export default {
           this.injectLogin = false;
           this.injectSignUp = true;
           this.injectSettings = false;
+          this.injectCustomer = false;
           this.openDialog = true;
           this.dialogContainerWidth = "33.875rem";
           this.dialogContainerHeight = "47.875rem";
@@ -71,9 +79,19 @@ export default {
           this.injectLogin = false;
           this.injectSignUp = false;
           this.injectSettings = true;
+          this.injectCustomer = false;
           this.openDialog = true;
           this.dialogContainerWidth = "68.313rem";
           this.dialogContainerHeight = "47.875rem";
+          return;
+        case 4:
+          this.injectLogin = false;
+          this.injectSignUp = false;
+          this.injectSettings = false;
+          this.injectCustomer = true;
+          this.openDialog = true;
+          this.dialogContainerWidth = "33.875rem";
+          this.dialogContainerHeight = "49.875rem";
           return;
         default:
           return;
@@ -84,7 +102,6 @@ export default {
     injectForm: {
       type: Number,
       required: true,
-      default: false,
     },
   },
   watch: {

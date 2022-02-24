@@ -1,6 +1,6 @@
 <!-- This is a resuable container that consumes and displays forms -->
 <template> 
-    <v-dialog   v-model="dialog" persistent :max-width="width" :max-height="height">
+    <v-dialog   v-model="dialog" :max-width="width" :max-height="height">
       <slot name="content"></slot>
     </v-dialog> 
 </template>
