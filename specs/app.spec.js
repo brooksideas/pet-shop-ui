@@ -1,9 +1,23 @@
 import App from "@/App.vue";
-import { mount } from "@vue/test-utils";
+import { mount , shallowMount , createLocalVue } from "@vue/test-utils";
+import Vuetify from "vuetify";
+import router from "@/router/router.js";
 
-describe("App", () => {
-  it("App renders a div", () => {
-    const wrapper = mount(App);
-    expect(wrapper.find("#app").exists()).toBe(true);
+
+describe("App Tests", () => {
+  const localVue = createLocalVue();
+  let vuetify;
+
+  beforeEach(() => {
+    vuetify = new Vuetify();
   });
-}); 
+
+  it("App is mounted on the application", () => {
+    const wrapper = shallowMount(App, {
+      localVue,
+      vuetify,
+      router
+    });
+    expect(wrapper.is(App)).toBe(true);
+  });
+});
