@@ -10,7 +10,6 @@ import ProductPage from "@/pages/ProductPage.vue";
 
 Vue.use(VueRouter);
 export const router = new VueRouter({
-  // mode: history,
   routes: [
     {
       path: "/",
@@ -37,27 +36,4 @@ export const router = new VueRouter({
     },
   ]
 });
-
-// const router = new VueRouter.({
-//   mode: "history",
-//   base: process.env.BASE_URL,
-//   routes,
-// });
-
-// router.beforeEach(async (to, from, next) => {
-//   console.log("to => ", to);
-//   console.log("from =>", from);
-//   console.log("next=>", next);
-
-//   localforage.setItem("router", to.name).catch((error) => console.error(error));
-  
-//   const routeName = { name: to.name };
-
-//   console.log("Store => ", store);
-//   store.dispatch('router/storeRoute', { routeName } , { root: true });
-
-
-//   next();
-// });
-
-// export default router;
+ 
