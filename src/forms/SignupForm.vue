@@ -37,6 +37,8 @@
           <v-form @submit.prevent="login" ref="signupForm" lazy-validation>
             <v-row>
               <v-text-field
+                id="firstNameId"
+                type="text"
                 v-model="firstName"
                 class="pr-0 mr-0 textFieldFirstNameClass"
                 placeholder="First Name *"
@@ -44,6 +46,8 @@
                 required
               ></v-text-field>
               <v-text-field
+               id="lastNameId"
+                type="text"
                 v-model="lastName"
                 class="textFieldLastNameClass"
                 placeholder="Last Name *"
@@ -52,6 +56,8 @@
               ></v-text-field>
               <v-col cols="12" sm="12" md="12">
                 <v-text-field
+                  id="signupEmailId"
+                  type="email"
                   v-model="email"
                   class="textFieldClass"
                   placeholder="Email Address *"
@@ -62,6 +68,7 @@
 
               <v-col cols="12" sm="12" md="12">
                 <v-text-field
+                 id="signupPasswordId"
                   v-model="password"
                   class="textFieldClass"
                   placeholder="Password *"
@@ -73,6 +80,7 @@
 
               <v-col  class="py-0 my-0" cols="12" sm="12" md="12">
                 <v-text-field
+                 id="signupConfirmPasswordId"
                   v-model="password"
                   class="textFieldConfirmClass"
                   placeholder="Confirm Password *"
@@ -83,7 +91,7 @@
               </v-col>
 
               <v-col class="px-0 py-0 mx-0 my-0" cols="12" sm="12" md="12">
-                <v-checkbox class="ml-2 my-0 checkboxClass" v-model="checkbox">
+                <v-checkbox id="signupCheckboxId" class="ml-2 my-0 checkboxClass" v-model="checkbox">
                   <template v-slot:label>
                     <label class="black--text checkboxLabel"
                       >I want to receive inspiration, marketing promotions and
@@ -95,6 +103,7 @@
 
               <v-col cols="12" sm="12" md="12">
                 <v-btn
+                  id="signupBtnId"
                   class="primary loginBtnClass"
                   type="submit"
                   :loading="loading"
@@ -120,8 +129,12 @@ import "@/styles/signup.scss";
 export default {
   name: "signupForm",
   data: () => ({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
+    confirmPassword: "",
+    checkbox: false,
     loading: false,
     showPass: false,
     iconColor: "orange",
