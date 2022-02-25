@@ -16,6 +16,14 @@ export const store = new Vuex.Store({
       });
       localforage.setDriver([localforage.INDEXEDDB, localforage.LOCALSTORAGE]);
     },
+
+     // persist Auth Stored Data
+     persistAuth: (state) => {
+       console.log('auth', state);
+      localforage
+        .setItem("auth", state.auth)
+        .catch((error) => console.error(error));
+    },
   },
   actions: {},
 });
