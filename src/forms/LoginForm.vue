@@ -4,7 +4,9 @@
       <v-row justify="center">
         <v-spacer> </v-spacer>
         <div class="closeClass">
-          <v-icon color="grey" size="1.5rem"> mdi-close </v-icon>
+          <v-icon @click="closeForm" color="grey" size="1.5rem">
+            mdi-close
+          </v-icon>
         </div>
         <v-col class="loginClass" cols="12" sm="12" md="12" lg="12">
           <v-avatar size="92" color="primary">
@@ -30,7 +32,12 @@
       </v-row>
       <v-card-text>
         <v-container>
-          <v-form @submit.prevent="login" id="loginForm" ref="loginForm" lazy-validation>
+          <v-form
+            @submit.prevent="login"
+            id="loginForm"
+            ref="loginForm"
+            lazy-validation
+          >
             <v-row>
               <v-col cols="12" sm="12" md="12">
                 <v-text-field
@@ -63,7 +70,12 @@
               </v-col>
 
               <v-col cols="12" sm="12" md="12">
-                <v-checkbox id="checkboxId" type="checkbox" class="ml-2 textFieldClass" v-model="checkbox">
+                <v-checkbox
+                  id="checkboxId"
+                  type="checkbox"
+                  class="ml-2 textFieldClass"
+                  v-model="checkbox"
+                >
                   <template v-slot:label>
                     <label class="black--text checkboxLabel"
                       >Remember Me
@@ -78,7 +90,7 @@
                   class="primary loginBtnClass"
                   type="submit"
                   :loading="loading"
-                  @click="submitForm"
+                  @click="login"
                 >
                   <label class="white--text loginLabelClass">LOG IN </label>
                 </v-btn>
@@ -111,16 +123,20 @@
 </template>
 <script>
 import "../styles/login.scss";
+import { mapFields } from "vuex-map-fields";
+import { mapActions } from "vuex";
 import { required, email } from "vuelidate/lib/validators";
+import ModalBuilder from "@/components/ModalBuilder.vue";
 
 export default {
   name: "LoginForm",
-  data:() => ({
+  data: () => ({
     email: "",
-    password: ""
+    password: "",
   }),
-  components: {},
+  components: { ModalBuilder },
   computed: {
+     ...mapFields("shared", ["currentForm"]),
     emailErrors() {
       const errors = [];
       if (!this.$v.email.$dirty) return errors;
@@ -143,18 +159,57 @@ export default {
     checkbox: true,
     loading: false,
     showPass: false,
-    iconColor: "orange",
-    browserTip: "browser-tip",
   }),
 
   methods: {
+    ...mapActions("auth", ["signInAdmin"]),
+    ...mapActions("shared", ["storeFormNumber"]),
+
     // Injects the signup (number 2 indicates the second form) form and displays the dialog
     openSignupModal() {
-      this.showSignupModal = true;
+      this.closeForm();
+      this.showSignupModal =  true;
+        //close form
+      const form = {
+        number: 2,
+      };
+      this.storeFormNumber({ form });
     },
-    submitForm(){
-      return;
-    }
+    closeForm() {
+      //close form
+      const form = {
+        number: -1,
+      };
+      this.storeFormNumber({ form });
+    },
+    async login() {
+      this.loading = true;
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        alert("Error on the Form. Please fill all the required fields.");
+        this.loading = false;
+        return;
+      } else {
+        try {
+          const payload = {
+            email: this.email,
+            password: this.password,
+          };
+          await this.signInAdmin({ payload }).then(() => {
+            //close form
+            this.closeForm();
+            this.loading = false;
+          })
+          .catch((error)=>{
+            alert("Error occured during signin process!");
+          });
+        } catch (error) {
+          console.error(error);
+          alert("Error occured during signin process!");
+          this.loading = false;
+        }
+      }
+    },
   },
   validations: {
     email: {
@@ -164,6 +219,6 @@ export default {
     password: {
       required,
     },
-  },
+  }, 
 };
 </script>

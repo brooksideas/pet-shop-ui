@@ -30,6 +30,7 @@ import SignupForm from "@/forms/SignupForm.vue";
 import UserSettingForm from "@/forms/UserSettingForm.vue";
 import CustomerForm from "@/forms/CustomerForm.vue";
 import { mapFields } from "vuex-map-fields";
+import { mapActions } from "vuex";
 
 export default {
   name: "ModalBuilder",
@@ -42,6 +43,7 @@ export default {
   },
   computed: {
     ...mapFields("auth", ["openLoginDialog"]),
+    ...mapFields("shared", ["currentForm"]),
   },
   data: () => ({
     openDialog: false,
@@ -49,10 +51,20 @@ export default {
     injectSignUp: false,
     injectSettings: false,
     injectCustomer: false,
+    closeDialog: false,
     dialogContainerWidth: "",
     dialogContainerHeight: "",
   }),
   methods: {
+    ...mapActions("shared", ["storeFormNumber"]),
+    // store the current injected form
+    storeCurrentForm(value) {
+      const form = {
+        number: value,
+      };
+      this.storeFormNumber({ form }); // store the opened form globally
+    },
+
     // Decide the Type of form to inject
 
     buildForm(value) {
@@ -94,6 +106,11 @@ export default {
           this.dialogContainerHeight = "49.875rem";
           return;
         default:
+          this.injectLogin = false;
+          this.injectSignUp = false;
+          this.injectSettings = false;
+          this.injectCustomer = false;
+          this.openDialog = false;
           return;
       }
     },
@@ -106,6 +123,12 @@ export default {
   },
   watch: {
     injectForm: {
+      immediate: true,
+      handler(value) {
+        this.storeCurrentForm(value); // store the form
+      },
+    },
+    currentForm: {
       immediate: true,
       handler(value) {
         this.buildForm(value); // inject the form

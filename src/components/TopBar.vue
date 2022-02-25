@@ -48,10 +48,14 @@
 </template>
 <script>
 import ModalBuilder from "@/components/ModalBuilder.vue";
+import { mapFields } from "vuex-map-fields";
 
 export default {
   name: "TopBar",
   components: { ModalBuilder },
+  computed:{
+    ...mapFields("shared", ["currentForm"]),
+  },
   data: () => ({
     cartItems: 0,
     showLoginModal: false,
@@ -62,12 +66,25 @@ export default {
   methods: {
     // Injects the login form and displays the dialog
     openLoginModal() {
-      this.showLoginModal = true;
+      this.showLoginModal = !this.showLoginModal;
+
     },
      // Injects the User Settings form and displays the dialog
     openSettingModal() {
-      this.showSettingModal = true;
+      this.showSettingModal = !this.showSettingModal;
     },
   },
+  watch:{
+     currentForm: {
+      immediate: true,
+      handler(value) {
+        // close the dialog
+        if (value == -1) {
+          this.showLoginModal = false;
+          this.showSettingModal = false;
+        }
+      },
+    },
+  }
 };
 </script>
