@@ -4,7 +4,9 @@
       <v-row justify="center">
         <v-spacer> </v-spacer>
         <div class="closeClass">
-          <v-icon color="grey" size="1.5rem"> mdi-close </v-icon>
+          <v-icon @click="closeForm" color="grey" size="1.5rem">
+            mdi-close
+          </v-icon>
         </div>
       </v-row>
       <v-row justify="center" class="px-0 py-0 mx-0 my-0">
@@ -38,17 +40,17 @@
 
                   <v-row class="" justify="start">
                     <label class="black--text nameValueLabel">
-                      Fname Lname
+                      {{ firstName | fullName(lastName) }}
                     </label>
                   </v-row>
 
                   <v-row class="mt-4" justify="start">
-                    <label class="black--text dateLabel"> date Joined </label>
+                    <label class="black--text dateLabel"> Date joined </label>
                   </v-row>
 
                   <v-row class="" justify="start">
                     <label class="black--text dateValueLabel">
-                      name lname
+                      {{ dateJoined | dateJoinedFormatted }}
                     </label>
                   </v-row>
                 </v-col>
@@ -56,22 +58,22 @@
                 <!-- Phone Number  and Email -->
                 <v-col class="phoneContainer" cols="2" sm="2" md="2" lg="2">
                   <v-row class="" justify="start">
-                    <label class="black--text phoneLabel"> phone </label>
+                    <label class="black--text phoneLabel"> Phone number </label>
                   </v-row>
 
                   <v-row class="" justify="start">
                     <label class="black--text phoneValueLabel">
-                      name lname
+                      {{ phoneNumber }}
                     </label>
                   </v-row>
 
                   <v-row class="mt-4" justify="start">
-                    <label class="black--text emailLabel">date Joined </label>
+                    <label class="black--text emailLabel">Email </label>
                   </v-row>
 
                   <v-row class="" justify="start">
                     <label class="black--text emailValueLabel">
-                      name lname
+                      {{ email }}
                     </label>
                   </v-row>
                 </v-col>
@@ -79,24 +81,24 @@
                 <!-- Address and Marketing -->
                 <v-col class="addressContainer" cols="3" sm="3" md="3" lg="3">
                   <v-row class="" justify="start">
-                    <label class="black--text addressLabel"> name </label>
+                    <label class="black--text addressLabel"> Address </label>
                   </v-row>
 
                   <v-row class="" justify="start">
                     <label class="black--text addressValueLabel">
-                      name lname
+                      {{ address }}
                     </label>
                   </v-row>
 
                   <v-row class="mt-4" justify="start">
                     <label class="black--text marketingLabel">
-                      date Joined
+                      Marketing preferences
                     </label>
                   </v-row>
 
                   <v-row class="" justify="start">
                     <label class="black--text marketingValueLabel">
-                      name lname
+                      {{ marketingPreferences | marketingPreferencesFomatted }}
                     </label>
                   </v-row>
                 </v-col>
@@ -106,11 +108,10 @@
         </v-container>
 
         <v-row justify="start" class="latestContainer">
-          <label @click="$router.go(-1)" class="black--text latestLabel"
-            >Latest orders</label
-          >
+          <label class="black--text latestLabel">Latest orders</label>
           <div class="tableContainer">
-          <data-table-container :headerData="headers" :selectedTable="1"> </data-table-container>
+            <data-table-container :headerData="headers" :selectedTable="1">
+            </data-table-container>
           </div>
         </v-row>
       </v-card-text>
@@ -119,27 +120,97 @@
 </template>
 <script>
 import "@/styles/setting.scss";
+import moment from "moment";
+import { mapActions } from "vuex";
+import localforage from "localforage";
 import DataTableContainer from "@/components/DataTableContainer.vue";
 export default {
   name: "UserSettingForm",
   components: { DataTableContainer },
+  created() {
+    this.fetchUserAccount();
+  },
   data: () => ({
+    firstName: "",
+    lastName: "",
     email: "",
-    password: "",
+    address: "",
+    phoneNumber: "",
+    marketingPreferences: "",
+    dateJoined: "",
     loading: false,
     showPass: false,
-    iconColor: "orange",
-    browserTip: "browser-tip",
-      headers: [
-        {
-          text: "Order UUID",
-          align: "start",
-          sortable: false,
-          value: "order",
-        },
-        { text: "Status", value: "status" },
-        { text: "Download invoice", value: "invoice" }, 
-      ],
+    headers: [
+      {
+        text: "Order UUID",
+        align: "start",
+        sortable: false,
+        value: "order",
+      },
+      { text: "Status", value: "status" },
+      { text: "Download invoice", value: "invoice" },
+    ],
   }),
+  filters: {
+    fullName(firstName, lastName) {
+      return firstName + lastName;
+    },
+
+    dateJoinedFormatted(date) {
+      var input = moment(date).format("L");
+      var formattedDate = input.replace("/", ".");
+      return formattedDate;
+    },
+
+    marketingPreferencesFomatted(preferences) {
+      return preferences === 1 ? "No" : "Yes";
+    },
+  },
+  methods: {
+    ...mapActions("shared", ["storeFormNumber"]),
+    ...mapActions("auth", ["getUserAccount"]),
+    closeForm() {
+      //close form
+      const form = {
+        number: -1,
+      };
+      this.storeFormNumber({ form });
+    },
+    async fetchUserAccount() {
+      try {
+        await this.getUserAccount().catch(() => {
+          alert("Could Not display user Account! Showing Defaults!");
+        });
+      } catch (error) {
+        alert("Could Not display user Account! Showing Defaults!");
+      }
+    },
+    async populateUserAccountView() {
+      await localforage.getItem("auth").then(async (value) => {
+        if (value && value.currentUser != null) {
+          this.firstName = value.currentUser.first_name;
+          this.lastName = value.currentUser.last_name;
+          this.email = value.currentUser.email;
+          this.address = value.currentUser.address;
+          this.phoneNumber = value.currentUser.phone_number;
+          this.marketingPreferences = value.currentUser.is_marketing;
+          this.dateJoined = value.currentUser.created_at;
+        } else {
+          alert("Please login to view user account!");
+        }
+      });
+    },
+  },
+
+  watch: {
+    currentUser: {
+      immediate: true,
+      handler(value) {
+        if (value) {
+          this.populateUserAccountView(value);
+        }
+      },
+    },
+  },
 };
 </script>

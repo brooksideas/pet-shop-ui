@@ -121,10 +121,7 @@ export default {
     email: "",
     password: "",
     showPassword:false,
-    loading: false,
-    showPass: false,
-    iconColor: "orange",
-    browserTip: "browser-tip",
+    loading: false, 
   }),
 };
 </script>

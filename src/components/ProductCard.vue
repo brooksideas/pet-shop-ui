@@ -1,7 +1,8 @@
 <template>
   <v-card class="productContainer">
-    <img src="../assets/Product_Image.svg" alt="Product" height="200px" />
-
+    <!-- <img src="../assets/Product_Image.svg" alt="Product" height="200px" /> -->
+<!--  -->
+ <v-img src="https://pet-shop.buckhill.com.hr/api/v1/file/c668ef23-d152-3ee6-8bb5-c32b9da68a4e" alt="Product" height="200px" ></v-img>
     <v-card-title class="productTitle text-decoration-underline">
       Top western road trips
     </v-card-title>
