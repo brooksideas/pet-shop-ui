@@ -128,7 +128,7 @@
 
         <!-- Three Dots -->
         <v-col class="ml-2 pl-6" cols="2" sm="2" md="2" lg="2">
-          <v-btn @click="actionRowClicked(item.actions)" :class="{'activeActionBtn': currentActionRowClicked === item.actions , 'inactiveActionBtn': currentActionRowClicked !== item.actions }" rounded icon>
+          <v-btn @click="actionRowClicked(item.actions)" :class="{'activeActionBtn': currentActionRowClicked === item.actions , 'inactiveInitialActionBtn': currentActionRowClicked !== item.actions && !showDeleteOptions ,  'inactiveActionBtn': currentActionRowClicked !== item.actions && showDeleteOptions  }" rounded icon>
             <v-icon size="16" color="grey"> mdi-dots-vertical</v-icon>
           </v-btn>
         </v-col>
@@ -146,7 +146,7 @@ export default {
   data: () => ({
     itemsData: [],
     currentActionRowClicked: -1,
-    showDeleteOptions: true
+    showDeleteOptions: false
   }),
   filters: {
     selectColor(status) {

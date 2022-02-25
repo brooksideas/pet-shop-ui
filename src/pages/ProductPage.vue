@@ -26,7 +26,7 @@
           </v-col>
         </v-row>
 
-        <v-card class="productDetailContainer" elevation="1">
+        <v-card class="productDetailContainer" elevation="0">
           <v-row>
             <v-col cols="4" sm="4" md="4" lg="4">
               <img
@@ -38,11 +38,11 @@
             </v-col>
 
             <v-col class="productRight" cols="8" sm="8" md="8" lg="8">
-              <v-card-title class="productTitle"> Brit Care </v-card-title>
+              <v-card-title class="productDetailTitle"> Brit Care </v-card-title>
 
               <v-card-subtitle class="">
-                <label class="productSubTitle"> {{ productText }} </label>
-                <label class="black--text productAmountLabel"> 200kn </label>
+                <label class="productDetailSubTitle"> {{ productText }} </label>
+                <label class="black--text productDetailAmountLabel"> 200kn </label>
               </v-card-subtitle>
 
               <v-card-actions>
@@ -50,7 +50,7 @@
                   <v-col cols="6" sm="6" md="6" lg="6">
                     <v-btn color="primary" class="cartBtnWrapper">
                       <v-icon left class="cartIcon"> mdi-cart </v-icon>
-                      <label class="white--text productAddLabel">
+                      <label class="white--text productDetailAddLabel">
                         add to cart
                       </label>
                     </v-btn>

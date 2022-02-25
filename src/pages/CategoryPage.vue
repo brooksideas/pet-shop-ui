@@ -6,8 +6,6 @@
           <v-col class="searchBarContainer" cols="12" sm="12" md="12" lg="12">
             <v-text-field
               placeholder="Search products"
-               
-              
               class="searchBarInput pl-12 ml-12"
               outlined
               color="primary"
@@ -68,7 +66,7 @@
             md="2"
             lg="2"
           >
-            <div class="col-12 pa-0 ma-0">
+            <div @click="routeToProductPage" class="col-12 pa-0 ma-0 cursor">
               <product-card> </product-card>
             </div>
           </v-col>
@@ -82,7 +80,7 @@
         <!-- configure pagination -->
         <div class="container">
           <div class="row justify-content-center px-0 mx-0 py-0 my-0">
-            <div class="col-2  itemLabelContainer">
+            <div class="col-2 itemLabelContainer">
               <label class="itemLabel"> Items per page: </label>
             </div>
             <div class="col-1 itemSelectContainer">
@@ -90,7 +88,7 @@
             </div>
             <div class="col-2">
               <label class="itemLabel"> 1-15 of 1240 </label>
-              </div>
+            </div>
           </div>
         </div>
         <!-- main container ends -->
@@ -112,5 +110,10 @@ export default {
   data: () => ({
     page: 1,
   }),
+  methods: {
+    routeToProductPage() {
+      this.$router.push({ name: "product-page" });
+    },
+  },
 };
 </script> 

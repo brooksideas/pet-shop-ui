@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-row class="mainContainer" justify="center">
+    <v-row class="mainCustomerContainer" justify="center">
       <v-col class="px-0 py-0 mx-0 my-0" cols="12" sm="12" md="12" lg="12">
         <label class="black--text customersTitle"> Customers </label>
-        <div class="breadCustomerContainer">
+        <div class="row breadCustomerContainer">
           <bread-crumb-container> </bread-crumb-container>
         </div>
         <div class="customerTableContainer">
