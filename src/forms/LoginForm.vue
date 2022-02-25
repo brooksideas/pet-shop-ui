@@ -30,15 +30,17 @@
       </v-row>
       <v-card-text>
         <v-container>
-          <v-form @submit.prevent="login" ref="loginForm" lazy-validation>
+          <v-form @submit.prevent="login" id="loginForm" ref="loginForm" lazy-validation>
             <v-row>
               <v-col cols="12" sm="12" md="12">
                 <v-text-field
+                  id="emailId"
                   v-model="email"
                   class="textFieldClass"
                   placeholder="Email Address *"
                   outlined
                   required
+                  type="email"
                   :error-messages="emailErrors"
                   @input="$v.email.$touch()"
                   @blur="$v.email.$touch()"
@@ -47,6 +49,7 @@
 
               <v-col cols="12" sm="12" md="12">
                 <v-text-field
+                  id="passwordId"
                   v-model="password"
                   class="textFieldClass"
                   placeholder="Password *"
@@ -60,7 +63,7 @@
               </v-col>
 
               <v-col cols="12" sm="12" md="12">
-                <v-checkbox class="ml-2 textFieldClass" v-model="checkbox">
+                <v-checkbox id="checkboxId" type="checkbox" class="ml-2 textFieldClass" v-model="checkbox">
                   <template v-slot:label>
                     <label class="black--text checkboxLabel"
                       >Remember Me
@@ -71,9 +74,11 @@
 
               <v-col cols="12" sm="12" md="12">
                 <v-btn
+                  id="loginBtnId"
                   class="primary loginBtnClass"
                   type="submit"
                   :loading="loading"
+                  @click="submitForm"
                 >
                   <label class="white--text loginLabelClass">LOG IN </label>
                 </v-btn>
@@ -105,11 +110,15 @@
   </v-row>
 </template>
 <script>
-import "@/styles/login.scss";
+import "../styles/login.scss";
 import { required, email } from "vuelidate/lib/validators";
 
 export default {
   name: "LoginForm",
+  data:() => ({
+    email: "",
+    password: ""
+  }),
   components: {},
   computed: {
     emailErrors() {
@@ -131,6 +140,7 @@ export default {
     injectSignupForm: 2,
     email: "",
     password: "",
+    checkbox: true,
     loading: false,
     showPass: false,
     iconColor: "orange",
@@ -142,6 +152,9 @@ export default {
     openSignupModal() {
       this.showSignupModal = true;
     },
+    submitForm(){
+      return;
+    }
   },
   validations: {
     email: {
