@@ -1,6 +1,5 @@
 <template>
   <div id="navigation">
-    <top-bar> </top-bar>
     <v-app>
       <!-- Header Component -->
         <top-bar> </top-bar>

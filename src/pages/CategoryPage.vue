@@ -6,8 +6,8 @@
           <v-col class="searchBarContainer" cols="12" sm="12" md="12" lg="12">
             <v-text-field
               placeholder="Search products"
-              @click:prepend-inner="filterSearch"
-              @keyup.enter="filterSearch"
+               
+              
               class="searchBarInput pl-12 ml-12"
               outlined
               color="primary"

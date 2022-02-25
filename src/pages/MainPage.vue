@@ -1,13 +1,11 @@
 <template>
   <v-app>
-    <v-row class="mainContainer" justify="center">
+    <v-row class="landingContainer" justify="center">
       <v-col cols="12" sm="12" md="6" lg="12">
         <v-row justify="center">
           <v-col class="searchBarContainer" cols="12" sm="12" md="12" lg="12">
             <v-text-field
-              placeholder="Search products"
-              @click:prepend-inner="filterSearch"
-              @keyup.enter="filterSearch"
+              placeholder="Search products" 
               class="searchBarInput pl-12 ml-12"
               outlined
               color="primary"
@@ -59,7 +57,7 @@
               </label>
             </v-row>
             <v-row justify="start">
-              <v-btn class="primary ml-12" width="350px" height="40px">
+              <v-btn @click="routeToCategory" class="primary ml-12" width="350px" height="40px">
                 <label
                   class="white--text discoverText text-decoration-underline"
                   >Discover our dog treat selection
@@ -121,5 +119,10 @@ import CarouselContainer from "@/components/CarouselContainer.vue";
 export default {
   name: "MainPage",
   components: { ProductCard, CarouselContainer },
+  methods: {
+    routeToCategory(){
+      this.$router.push({name: 'category-page'});
+    }
+  }
 };
 </script> 

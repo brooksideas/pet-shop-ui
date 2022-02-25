@@ -16,7 +16,6 @@
                 <v-row>
                   <v-icon
                     class="logoIcon"
-                    @click.stop="sidebarMenu = !sidebarMenu"
                     >mdi-paw</v-icon
                   >
                   <label class="ml-2 white--text logoName"> petson. </label>
@@ -76,22 +75,22 @@ export default {
       },
       {
         title: "All tickets",
-        link: "#",
+        link: "",
         icon: "mdi-credit-card ",
       },
       {
         title: "Shipment Locator",
-        link: "#",
+        link: "",
         icon: "mdi-map-marker ",
       },
       {
         title: "Customers",
-        link: "#",
+        link: "",
         icon: "mdi-account-multiple-outline ",
       },
       {
         title: "Products",
-        link: "#",
+        link: "",
         icon: "mdi-folder-outline ",
       },
     ],
