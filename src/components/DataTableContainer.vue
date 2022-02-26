@@ -150,8 +150,6 @@ export default {
   }),
   filters: {
     selectColor(status) {
-      console.log("status", status);
-
       switch (status) {
         case "Open":
           return "blue";
@@ -205,29 +203,29 @@ export default {
       // TODO:: fetch orders data here
       this.itemsData = [
         {
-          order: "Order UUID",
+          order: "083d0036-9616-3f1e-9b03-4fe51ad2e1c2",
           status: "Open",
-          invoice: 6.0,
+          invoice: 1
         },
         {
-          order: "Ice cream sandwich",
+          order: "083d0036-9616-3f1e-9b03-4fe51ad2e1c2",
           status: "Pending payment",
-          invoice: 9.0,
+          invoice: 1
         },
         {
-          order: "Eclair",
+          order: "083d0036-9616-3f1e-9b03-4fe51ad2e1c2",
           status: "Paid",
-          invoice: 16.0,
+          invoice: 1,
         },
         {
-          order: "Cupcake",
+          order: "083d0036-9616-3f1e-9b03-4fe51ad2e1c2",
           status: "Shipped",
-          invoice: 3.7,
+          invoice: 1
         },
         {
-          order: "Gingerbread",
+          order: "083d0036-9616-3f1e-9b03-4fe51ad2e1c2",
           status: "Cancelled",
-          invoice: 16.0,
+          invoice: 1,
         },
       ];
     },

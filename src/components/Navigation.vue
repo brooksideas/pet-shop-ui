@@ -4,7 +4,7 @@
       <!-- Header Component -->
         <top-bar> </top-bar>
       <!-- SideBar Component which is only visible for Admins -->
-      <side-bar></side-bar>
+      <side-bar v-if="isAdmin"></side-bar>
       <!-- Main Display area for Child routes -->
       <v-main class="px-2 pt-0 main-offset">
         <v-container class="px-0 py-0 mx-0 fill-height" fluid>
@@ -26,6 +26,7 @@
 import "../styles/main.scss";
 import TopBar from "@/components/TopBar.vue";
 import SideBar from "@/components/SideBar.vue";
+import { mapFields } from "vuex-map-fields";
 import FooterSection from "@/components/FooterSection.vue";
 
 export default {
@@ -36,6 +37,10 @@ export default {
     SideBar,
     FooterSection,
   },
+    computed: {
+    ...mapFields("auth", ["isAdmin"]),
+    },
   data: () => ({}),
+  
 };
 </script>

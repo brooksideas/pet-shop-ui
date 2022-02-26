@@ -6,6 +6,7 @@ import { signIn, logInUser, signUpUser, viewUserAccount } from "@/apis/auth.js";
 const state = {
   bearerToken: null,
   currentUser: null,
+  isAdmin: false,
 };
 
 const actions = {
@@ -15,9 +16,10 @@ const actions = {
       if (value) {
         /* Flush the bearerToken from auth Vuex state */
         state.bearerToken = null;
-
+        state.isAdmin = null;
         /* Hydarte bearerToken auth States before persisting */
         state.bearerToken = value.bearerToken;
+        state.isAdmin = value.isAdmin;
       }
     });
   },
@@ -31,7 +33,17 @@ const actions = {
         path: "bearerToken",
         value: data.token,
       });
+
+      commit("updateField", {
+        path: "currentUser",
+        value: null,
+      });
+
       if (data.token != undefined) {
+        commit("updateField", {
+          path: "isAdmin",
+          value: true, // set is admin to true since we successfully logged in with the Admin API end point
+        });
         store.commit("persistAuth");
       }
     } catch (error) {
@@ -46,15 +58,27 @@ const actions = {
 
   // Signin normal users
   async signInUser({ commit }, { payload }) {
-    console.log("pay", payload);
     try {
       const { data } = await logInUser(payload.email, payload.password);
       commit("updateField", {
         path: "bearerToken",
         value: data.token,
       });
+
+      // Do not store anything on the current user field yet
+      commit("updateField", {
+        path: "currentUser",
+        value: null,
+      });
+
       if (data.token != undefined) {
+        commit("updateField", {
+          path: "isAdmin",
+          value: false, // set is admin to false since we successfully logged in with the User API end point 
+        });
         store.commit("persistAuth");
+      } else {
+        alert("Error occurred on during the signin process!");
       }
     } catch (error) {
       return error;
@@ -79,9 +103,10 @@ const actions = {
         path: "bearerToken",
         value: data.token,
       });
-      console.log(data.token);
       if (data.token != undefined) {
         store.commit("persistAuth");
+      } else {
+        alert("Error occurred on during the signup process!");
       }
     } catch (error) {
       alert("Error occurred on during the signup process!");
@@ -90,15 +115,14 @@ const actions = {
   },
 
   // view a User Account
-  async getUserAccount({ commit }, { _ }) {
+  async getUserAccount({ commit }) {
     try {
-      const data = await viewUserAccount();
+      const { data } = await viewUserAccount();
       commit("updateField", {
         path: "currentUser",
         value: data,
       });
 
-      console.log('ber->', state.currentUser);
       // rehydrate the bearer token so that we will not lose it on committing to the Index Database
       await actions
         .hydrateAuthBearerToken()
@@ -107,6 +131,10 @@ const actions = {
       alert("Could Not display user Account! Showing Defaults!");
       return error;
     }
+  },
+
+  async logoutUser() {
+    store.commit("unpersistAll");
   },
 };
 const mutations = {

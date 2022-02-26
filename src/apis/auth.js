@@ -3,11 +3,10 @@ import localforage from "localforage";
 
 const axios = require("axios");
 
-const BASE_URL = process.env.VUE_APP_BASE_URL || urls.TEST;
+const BASE_URL = process.env.VUE_APP_BASE_URL || urls.API;
 
 // Signin Endpoint
 export const signIn = async (email, password) => {
-  console.log("BASE_URL", BASE_URL);
   const loginEndPoint = "v1/admin/login";
 
   try {
@@ -47,7 +46,6 @@ export const signUpUser = async (
   confirmPassword
 ) => {
   const userCreateEndPoint = "v1/user/create";
-  console.log("FUNC->", firstName, lastName, email, password, confirmPassword);
   try {
     const { data } = await axios.post(BASE_URL + userCreateEndPoint, {
       first_name: firstName,
@@ -70,7 +68,6 @@ export const signUpUser = async (
 // View user Account
 export const viewUserAccount = async () => {
   const viewUserEndPoint = "v1/user";
-  
 
   var token;
 
@@ -78,20 +75,18 @@ export const viewUserAccount = async () => {
     if (value && value.bearerToken != null) {
       token = value.bearerToken;
     } else {
-       alert('Please login to view user account!');
+      alert("Please login to view user account!");
     }
   });
-
-  const headerConfiguration = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-  const emptyBody = {};
   try {
     const { data } = await axios.get(BASE_URL + viewUserEndPoint, {
-      emptyBody,
-      headerConfiguration
+      headers: { Authorization: `Bearer ${token}` },
     });
-    return data;
+    if (data.success === 1) {
+      return data;
+    } else {
+      return error;
+    }
   } catch (error) {
     return error;
   }

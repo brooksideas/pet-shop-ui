@@ -1,5 +1,6 @@
 const urls = {
-    TEST: "https://pet-shop.buckhill.com.hr/api/", 
+    API: "https://pet-shop.buckhill.com.hr/api/", 
+    FILES: "https://pet-shop.buckhill.com.hr/api/v1/file/"
   };
   
   Object.freeze(urls);
