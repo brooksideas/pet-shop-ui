@@ -4,7 +4,7 @@
       <v-col class="px-0 py-0 mx-0 my-0" cols="12" sm="12" md="12" lg="12">
         <label class="black--text customersTitle"> Customers </label>
         <div class="row breadCustomerContainer">
-          <bread-crumb-container> </bread-crumb-container>
+          <bread-crumb-container :items="customersLink"> </bread-crumb-container>
         </div>
         <div class="customerTableContainer">
           <v-row justify="start" class="mx-0 my-0 px-0 py-0">
@@ -18,7 +18,11 @@
               md="6"
               lg="6"
             >
-              <v-btn color="primary" class="addBtnWrapper cursor" @click="openCustomerModal">
+              <v-btn
+                color="primary"
+                class="addBtnWrapper cursor"
+                @click="openCustomerModal"
+              >
                 <v-icon left class="addIcon ml-1"> mdi-plus </v-icon>
                 <label class="white--text addNewLabel">
                   Add new customer
@@ -26,7 +30,8 @@
               </v-btn>
 
               <div v-if="showAddModal">
-                <modal-builder :injectForm="injectCustomerForm"> </modal-builder>
+                <modal-builder :injectForm="injectCustomerForm">
+                </modal-builder>
               </div>
             </v-col>
 
@@ -90,13 +95,20 @@ export default {
       { text: "Marketing preferences", value: "preferences" },
       { text: "", value: "actions" },
     ],
+    customersLink: [
+      {
+        text: "Dashboard",
+        disabled: false,
+        href: "/",
+      },
+    ],
   }),
   methods: {
     showFilters() {
       this.show = !this.show;
     },
 
-      // Injects the signup (number 4 indicates the Add / Edit Customer form) form and displays the dialog
+    // Injects the signup (number 4 indicates the Add / Edit Customer form) form and displays the dialog
     openCustomerModal() {
       this.showAddModal = true;
     },

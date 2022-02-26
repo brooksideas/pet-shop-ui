@@ -85,7 +85,7 @@ export default {
       },
       {
         title: "Customers",
-        link: "",
+        link: "customer-page",
         icon: "mdi-account-multiple-outline ",
       },
       {

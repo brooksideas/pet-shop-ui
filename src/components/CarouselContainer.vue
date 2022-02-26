@@ -1,9 +1,17 @@
 <template>
-  <v-carousel v-model="model" height="200" hide-delimiters  @change="nextProduct(model)">
-    <v-carousel-item v-for="(color, i) in colors" :key="color">
-      <v-sheet :color="color" height="100%" tile>
+  <v-carousel
+    v-model="model"
+    height="200"
+    hide-delimiters
+    @change="nextProduct(model)"
+  >
+    <v-carousel-item v-for="i in 4" :key="i">
+      <v-sheet color="white" height="100%" tile>
         <v-row class="fill-height" align="center" justify="center">
-          <div class="text-h2">Slide {{ i + 1 }}</div>
+          <product-card> </product-card>
+          <product-card> </product-card>
+          <product-card> </product-card>
+          <product-card> </product-card>
         </v-row>
       </v-sheet>
     </v-carousel-item>
@@ -12,16 +20,18 @@
 
 
 <script>
+import ProductCard from "@/components/ProductCard.vue";
+
 export default {
   name: "CarouselContainer",
+  components: { ProductCard },
+
   data: () => ({
     model: 0,
-    colors: ["primary", "secondary", "yellow darken-2", "red", "orange"],
   }),
-  methods:{
-      nextProduct(n){
-          console.log("NEXT", n);
-      }
-  }
+  methods: {
+    nextProduct(n) {
+    },
+  },
 };
 </script>

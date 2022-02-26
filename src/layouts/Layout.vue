@@ -53,7 +53,6 @@ export default {
     currentRouteName: {
       immediate: true,
       handler(value) {
-        console.log("Layout", value);
         this.setRoute(value);
       },
     },

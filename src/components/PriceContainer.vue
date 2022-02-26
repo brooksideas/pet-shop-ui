@@ -81,7 +81,7 @@ export default {
   name: "PriceContainer",
   data: () => ({
     show: true,
-    ex3: { label: "thumb-color", val: 50, color: "red" },
+    ex3: { label: "", val: 50, color: "grey" },
   }),
   methods: {
     togglePrice() {
