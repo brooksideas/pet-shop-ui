@@ -19,7 +19,24 @@
             <v-col class="" cols="12" sm="12" md="12" lg="12">
               <v-row class="" justify="start">
                 <v-col class="ml-10" cols="2" sm="2" md="2" lg="2">
-                  <v-avatar size="141" color="primary"> </v-avatar>
+                  <v-avatar size="141" color="primary">
+                    <v-img
+                      v-if="avatar !== null"
+                      :src="displayAvatar"
+                      alt="Profile"
+                      height="200px"
+                    ></v-img>
+                    <span
+                      v-if="avatar === null"
+                      class="
+                        white--text
+                        font-weight-bold
+                        avatarPlaceholderLabel
+                      "
+                    >
+                      {{ nameInitialsFilter(firstName, lastName) }}
+                    </span>
+                  </v-avatar>
                 </v-col>
 
                 <v-col
@@ -121,16 +138,27 @@
 <script>
 import "@/styles/setting.scss";
 import moment from "moment";
+import { mapFields } from "vuex-map-fields";
 import { mapActions } from "vuex";
-import localforage from "localforage";
+import { urls } from "@/constants/urls";
+import getInitials from "@/mixins/names.mixin.js";
 import DataTableContainer from "@/components/DataTableContainer.vue";
 export default {
   name: "UserSettingForm",
   components: { DataTableContainer },
+  computed: {
+    ...mapFields("shared", ["currentForm"]),
+    ...mapFields("auth", ["currentUser"]),
+    ...mapActions("order", ["userOrders"]),
+    displayAvatar() {
+      return urls.FILES + this.avatar;
+    },
+  },
   created() {
     this.fetchUserAccount();
   },
   data: () => ({
+    avatar: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -153,12 +181,12 @@ export default {
   }),
   filters: {
     fullName(firstName, lastName) {
-      return firstName + lastName;
+      return firstName + " " + lastName;
     },
 
     dateJoinedFormatted(date) {
       var input = moment(date).format("L");
-      var formattedDate = input.replace("/", ".");
+      var formattedDate = input.replace("/", ".").replace("/", ".");
       return formattedDate;
     },
 
@@ -169,6 +197,7 @@ export default {
   methods: {
     ...mapActions("shared", ["storeFormNumber"]),
     ...mapActions("auth", ["getUserAccount"]),
+    ...mapActions("order", ["getLatestUserOrders"]),
     closeForm() {
       //close form
       const form = {
@@ -178,31 +207,43 @@ export default {
     },
     async fetchUserAccount() {
       try {
-        await this.getUserAccount().catch(() => {
-          alert("Could Not display user Account! Showing Defaults!");
-        });
+        await this.getUserAccount()
+          .then(() => {
+            this.populateUserAccountView();
+          })
+          .catch(() => {
+            alert("Could Not display user Account! Showing Defaults!");
+          });
       } catch (error) {
         alert("Could Not display user Account! Showing Defaults!");
       }
     },
     async populateUserAccountView() {
-      await localforage.getItem("auth").then(async (value) => {
-        if (value && value.currentUser != null) {
-          this.firstName = value.currentUser.first_name;
-          this.lastName = value.currentUser.last_name;
-          this.email = value.currentUser.email;
-          this.address = value.currentUser.address;
-          this.phoneNumber = value.currentUser.phone_number;
-          this.marketingPreferences = value.currentUser.is_marketing;
-          this.dateJoined = value.currentUser.created_at;
-        } else {
-          alert("Please login to view user account!");
-        }
-      });
+      this.avatar = this.currentUser.avatar;
+      this.firstName = this.currentUser.first_name;
+      this.lastName = this.currentUser.last_name;
+      this.email = this.currentUser.email;
+      this.address = this.currentUser.address;
+      this.phoneNumber = this.currentUser.phone_number;
+      this.marketingPreferences = this.currentUser.is_marketing;
+      this.dateJoined = this.currentUser.created_at;
+
+      // TODO:: Implemete feature
+      await this.getLatestUserOrders();
     },
   },
+  mixins: [getInitials],
 
   watch: {
+    currentForm: {
+      immediate: true,
+      handler(value) {
+        // fetch settings to display
+        if (value == 3) {
+          this.fetchUserAccount();
+        }
+      },
+    },
     currentUser: {
       immediate: true,
       handler(value) {
