@@ -33,7 +33,7 @@
 
         <v-row>
           <v-col class="firstTitleContainer" cols="12" sm="12" md="12" lg="12">
-            <label class="primary--text titleText"> Dry dog food </label>
+            <label  @click="routeToCategory"  class="primary--text titleText cursor"> Dry dog food </label>
             <div class="carouselContainer">
               <carousel-container> </carousel-container>
             </div>
@@ -57,7 +57,7 @@
               </label>
             </v-row>
             <v-row justify="start">
-              <v-btn @click="routeToCategory" class="primary ml-12" width="350px" height="40px">
+              <v-btn class="primary ml-12" width="350px" height="40px">
                 <label
                   class="white--text discoverText text-decoration-underline"
                   >Discover our dog treat selection

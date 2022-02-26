@@ -19,7 +19,8 @@
             <label class="primary--text titleText"> Dry dog food </label>
             <v-row>
               <div class="breadContainer">
-                <bread-crumb-container> </bread-crumb-container>
+                <bread-crumb-container :items="homeLink">
+                </bread-crumb-container>
               </div>
 
               <div class="dropContainer">
@@ -67,14 +68,19 @@
             lg="2"
           >
             <div @click="routeToProductPage" class="col-12 pa-0 ma-0 cursor">
-              <product-card> </product-card>
+              <product-card :title="title" :description="description" :price="price"> </product-card>
             </div>
           </v-col>
         </v-row>
 
         <!-- pagination at the bottom -->
         <div class="text-center">
-          <v-pagination v-model="page" :length="4" circle></v-pagination>
+          <v-pagination
+            v-model="page"
+            :length="4"
+            circle
+            @input="fetchAllProductsAvailable"
+          ></v-pagination>
         </div>
 
         <!-- configure pagination -->
@@ -99,6 +105,9 @@
 
 <script>
 import "../styles/category.scss";
+import { mapFields } from "vuex-map-fields";
+import { mapActions } from "vuex";
+import localforage from "localforage";
 import ProductCard from "@/components/ProductCard.vue";
 import BreadCrumbContainer from "@/components/BreadCrumbContainer.vue";
 import PriceContainer from "@/components/PriceContainer.vue";
@@ -106,13 +115,94 @@ import PriceContainer from "@/components/PriceContainer.vue";
 export default {
   name: "CategoryPage",
   components: { ProductCard, BreadCrumbContainer, PriceContainer },
-  created() {},
+  created() {
+    this.fetchAllProductsAvailable();
+  },
+
   data: () => ({
+    uuid: "",
+    title: "",
+    description: "",
+    price: "",
     page: 1,
+    homeLink: [
+      {
+        text: "Homepage",
+        disabled: true,
+        href: "/",
+      },
+      {
+        text: "Dogs",
+        disabled: true,
+        href: "/",
+      },
+      {
+        text: "Dog food",
+        disabled: true,
+        href: "/",
+      },
+      {
+        text: "dry dog food",
+        disabled: false,
+        href: "/",
+      },
+    ],
+    productList: [],
   }),
   methods: {
+    ...mapActions("product", ["getAllProducts"]),
     routeToProductPage() {
       this.$router.push({ name: "product-page" });
+    },
+    async fetchAllProductsAvailable() {
+      try {
+        // check the localstore before fetching
+        await localforage.getItem("product").then(async (value) => {
+          if (value && value.allProducts != null) {
+            this.productList = [];
+            this.populateProducts(value.allProducts);
+          } else {
+            // fetch if not found
+            const payload = {
+              page: this.page,
+              limit: 15, // always set to 15 according to the figma
+            };
+
+            await this.getAllProducts({ payload });
+          }
+        });
+      } catch (error) {
+        alert("Error occurred on during the product fetching process!");
+      }
+    },
+
+    populateProducts(value) {
+      if (value && value.length != 0) {
+        value.forEach((product) => {
+          // check if the product is already on the list , push if it is not
+          var found = this.productList.find(
+            (element) => element.uuid === product.uuid
+          );
+
+          if (!found) {
+            this.productList.push({
+              uuid: product.uuid,
+              title: product.title,
+              description: product.description,
+              price: product.price,
+            });
+          }
+        });
+      }
+    },
+  },
+
+  watch: {
+    allProducts: {
+      immediate: true,
+      handler(value) {
+        this.populateProducts(value);
+      },
     },
   },
 };
