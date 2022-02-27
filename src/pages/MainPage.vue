@@ -118,6 +118,9 @@ import CarouselContainer from "@/components/CarouselContainer.vue";
 
 export default {
   name: "MainPage",
+  data: () => ({
+    search:""
+  }),
   components: { ProductCard, CarouselContainer },
   methods: {
     routeToCategory(){

@@ -41,7 +41,7 @@ export default {
     shortenTitle(title) {
       if (title !== "") {
         var shortVersion = title.split(" ");
-        return shortVersion[0] + shortVersion[1] + shortVersion[2] + "...";
+        return shortVersion[0] + " "+ shortVersion[1]+ " " + shortVersion[2] + "...";
       }
       return "";
     },
@@ -50,7 +50,7 @@ export default {
     image: {
       type: String,
       required: false,
-      default: "51ca9d93-02e0-3cd7-aa0b-f248c42cee45",
+      default: "4dc2780f-4559-3d29-aacc-136208511c0f",
     },
     title: {
       type: String,
