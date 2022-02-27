@@ -8,6 +8,8 @@
     line-height: 2rem !important;
     font-style: normal !important;
     letter-spacing: 0.009rem;
+    --max-lines: 3;
+    text-overflow: truncate;
 }
 .productSubTitle{
     font-size: 1rem !important;
@@ -16,6 +18,7 @@
     font-style: normal !important;
     letter-spacing: 0.009rem;
     display: block;
+    text-overflow: truncate;
 }
 .productAmountLabel{
     font-size: 1.25rem !important;

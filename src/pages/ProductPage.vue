@@ -5,9 +5,7 @@
         <v-row justify="center">
           <v-col class="searchBarContainer" cols="12" sm="12" md="12" lg="12">
             <v-text-field
-              placeholder="Search products"
-              @click:prepend-inner="filterSearch"
-              @keyup.enter="filterSearch"
+              placeholder="Search products" 
               class="searchBarInput pl-12 ml-12"
               outlined
               color="primary"
@@ -29,8 +27,8 @@
         <v-card class="productDetailContainer" elevation="0">
           <v-row>
             <v-col cols="4" sm="4" md="4" lg="4">
-              <img
-                src="../assets/Product_Image.svg"
+              <v-img
+                :src="productImage | displayImage"
                 alt="Product"
                 width="405.34"
                 height="637.07px"
@@ -38,11 +36,17 @@
             </v-col>
 
             <v-col class="productRight" cols="8" sm="8" md="8" lg="8">
-              <v-card-title class="productDetailTitle"> Brit Care </v-card-title>
+              <v-card-title class="productDetailTitle text-wrap">
+                {{ productTitle }}
+              </v-card-title>
 
               <v-card-subtitle class="">
-                <label class="productDetailSubTitle"> {{ productText }} </label>
-                <label class="black--text productDetailAmountLabel"> 200kn </label>
+                <label class="productDetailSubTitle text-wrap">
+                  {{ productDescription }}
+                </label>
+                <label class="black--text productDetailAmountLabel">
+                  {{ productPrice }}kn
+                </label>
               </v-card-subtitle>
 
               <v-card-actions>
@@ -115,6 +119,8 @@
 </template>
 
 <script>
+import { urls } from "@/constants/urls";
+import { mapFields } from "vuex-map-fields";
 import "../styles/productdetail.scss";
 import BreadCrumbContainer from "@/components/BreadCrumbContainer.vue";
 
@@ -122,8 +128,15 @@ export default {
   name: "ProductPage",
   components: { BreadCrumbContainer },
   created() {},
+
+  computed: {
+    ...mapFields("product", ["currentSelectedProduct"]),
+  },
   data: () => ({
-    productText: "Endurance Duck & Rice Dry dog food",
+    productImage: "../assets/Product_Image.svg",
+    productPrice: "200kn",
+    productDescription: "This is a description",
+    productTitle: "Endurance Duck & Rice Dry dog food",
     topTitle:
       "Hypoallergenic superpremium complete feed for dogs. lamb & rice formula for adult dogs of medium breeds (10 – 25 kg). ",
     firstTitle: "Composition:",
@@ -137,6 +150,49 @@ export default {
       "vitamin A (3a672a) 20,000 I.U., vitamin D3 (3a671) 1,500 I.U., vitamin E (3a700) 500 mg, vitamin C (3a312) 200 mg, choline chloride (3a890) 1,800 mg, biotin  (3a880) 0.6 mg, vitamin B1 (3a821) 5 mg, vitamin B2 (3a825i) 6 mg, niacinamide (3a315) 22 mg, calcium-D-pantothenate (3a841) 15 mg, vitamin B6 (3a831) 5 mg, folic acid (3a316) 0.6 mg, vitamin B12 0.05 mg, zinc (3b606) 80 mg, iron (3b106) 70 mg, manganese (3b504) 35 mg, iodine (3b201) 0.65 mg, copper (3b406) 15 mg, selenium (3b810) 0.2 mg. Contains natural antioxidants: tocopherol extracts from vegetable oil (1b306(i)), ascorbyl palmitate (1b304) & rosemary extract.",
     fourthTitle: "Metabolizable energy:",
     fourthDescription: "3,820 kcal/kg. Omega 3:  0.36 %, Omega 6:  1.90 %.",
+    homeLink: [
+      {
+        text: "Homepage",
+        disabled: true,
+        href: "/",
+      },
+      {
+        text: "Dogs",
+        disabled: true,
+        href: "/",
+      },
+      {
+        text: "Dog food",
+        disabled: true,
+        href: "/",
+      },
+      {
+        text: "Dry dog food",
+        disabled: true,
+        href: "/",
+      },
+      {
+        text: "Brit Care Endurance",
+        disabled: false,
+        href: "/",
+      },
+    ],
   }),
+  filters: {
+    displayImage(image) {
+      return urls.FILES + image;
+    },
+  },
+  watch: {
+    currentSelectedProduct: {
+      immediate: true,
+      handler(value) {
+        this.productImage = value.image;
+        this.productPrice = value.price;
+        this.productDescription = value.description;
+        this.productTitle = value.title;
+      },
+    },
+  },
 };
 </script> 

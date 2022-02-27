@@ -1,15 +1,18 @@
 <template>
   <v-card class="productContainer">
-    <!-- <img src="../assets/Product_Image.svg" alt="Product" height="200px" /> -->
-<!--  -->
- <v-img src="https://pet-shop.buckhill.com.hr/api/v1/file/c668ef23-d152-3ee6-8bb5-c32b9da68a4e" alt="Product" height="200px" ></v-img>
+    
+    <v-img 
+      :src="image | displayImage"
+      alt="Product"
+      height="200px"
+    ></v-img>
     <v-card-title class="productTitle text-decoration-underline">
-      Top western road trips
+      {{ title | shortenTitle }}
     </v-card-title>
 
     <v-card-subtitle class="">
-      <label class="productSubTitle"> Animonda </label>
-      <label class="black--text productAmountLabel"> 200kn </label>
+      <label class="productSubTitle"> {{ description }} </label>
+      <label class="black--text productAmountLabel"> {{ price }} </label>
     </v-card-subtitle>
 
     <v-card-actions>
@@ -23,11 +26,44 @@
 
 <script>
 import "../styles/product.scss";
+import { urls } from "@/constants/urls";
 
 export default {
   name: "ProductCard",
+ 
   data: () => ({
     show: false,
   }),
+  filters: {
+    displayImage(image) {
+      return urls.FILES + image;
+    },
+    shortenTitle(title) {
+      if (title !== "") {
+        var shortVersion = title.split(" ");
+        return shortVersion[0] + shortVersion[1] + shortVersion[2] + "...";
+      }
+      return "";
+    },
+  },
+  props: {
+    image: {
+      type: String,
+      required: false,
+      default: "51ca9d93-02e0-3cd7-aa0b-f248c42cee45",
+    },
+    title: {
+      type: String,
+      required: false,
+    },
+    description: {
+      type: String,
+      required: false,
+    },
+    price: {
+      type: Number,
+      required: false,
+    },
+  }, 
 };
 </script>

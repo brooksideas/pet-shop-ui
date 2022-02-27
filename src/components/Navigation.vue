@@ -2,7 +2,7 @@
   <div id="navigation">
     <v-app>
       <!-- Header Component -->
-        <top-bar> </top-bar>
+      <top-bar> </top-bar>
       <!-- SideBar Component which is only visible for Admins -->
       <side-bar v-if="isAdmin"></side-bar>
       <!-- Main Display area for Child routes -->
@@ -37,10 +37,20 @@ export default {
     SideBar,
     FooterSection,
   },
-    computed: {
+  computed: {
     ...mapFields("auth", ["isAdmin"]),
-    },
+  },
   data: () => ({}),
-  
+  watch: {
+    isAdmin: {
+      immediate: true,
+      handler(value) {
+        if(value){
+          // if the user is admin route to customers page 
+          this.$router.push({name: "customer-page"});
+        }
+      },
+    },
+  },
 };
 </script>

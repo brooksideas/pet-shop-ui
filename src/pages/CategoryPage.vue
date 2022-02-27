@@ -41,11 +41,7 @@
                     md="12"
                     lg="12"
                   >
-                    <v-select
-                      class=""
-                      :items="items"
-                      label="Standard"
-                    ></v-select>
+                    <v-select class="" :items="[]" label="Standard"></v-select>
                   </v-col>
                 </v-row>
               </div>
@@ -59,21 +55,30 @@
 
         <v-row justify="start" class="priceContainer">
           <v-col
-            v-for="n in 4"
-            :key="n"
+            v-for="product in productList"
+            :key="product.uuid"
             class="productWrap"
             cols="2"
             sm="2"
             md="2"
             lg="2"
           >
-            <div @click="routeToProductPage" class="col-12 pa-0 ma-0 cursor">
-              <product-card :title="title" :description="description" :price="price"> </product-card>
+            <div
+              @click="routeToProductPage(product)"
+              class="red col-12 pa-0 ma-0 cursor"
+            >
+              <product-card
+                :image="product.image"
+                :title="product.title"
+                :description="product.description"
+                :price="product.price"
+              >
+              </product-card>
             </div>
           </v-col>
         </v-row>
 
-        <!-- pagination at the bottom -->
+        <!-- pagination at the bottom , on next click pagination fires next event to fetch that page -->
         <div class="text-center">
           <v-pagination
             v-model="page"
@@ -90,7 +95,7 @@
               <label class="itemLabel"> Items per page: </label>
             </div>
             <div class="col-1 itemSelectContainer">
-              <v-select class="" :items="items" label="15"></v-select>
+              <v-select class="" :items="pageItems" label="15"></v-select>
             </div>
             <div class="col-2">
               <label class="itemLabel"> 1-15 of 1240 </label>
@@ -120,11 +125,13 @@ export default {
   },
 
   data: () => ({
+    search: "",
     uuid: "",
     title: "",
     description: "",
     price: "",
     page: 1,
+    pageItems: ["15"],
     homeLink: [
       {
         text: "Homepage",
@@ -150,11 +157,21 @@ export default {
     productList: [],
   }),
   methods: {
-    ...mapActions("product", ["getAllProducts"]),
-    routeToProductPage() {
+    ...mapActions("product", ["getAllProducts", "storeProductSelection"]),
+    routeToProductPage(product) {
+      // store the values
+      const payload = {
+        uuid: product.uuid,
+        image: product.image,
+        title: product.title,
+        description: product.description,
+        price: product.price,
+      };
+      this.storeProductSelection({payload});
       this.$router.push({ name: "product-page" });
     },
     async fetchAllProductsAvailable() {
+      // fetch if not found
       try {
         // check the localstore before fetching
         await localforage.getItem("product").then(async (value) => {
@@ -179,19 +196,21 @@ export default {
     populateProducts(value) {
       if (value && value.length != 0) {
         value.forEach((product) => {
-          // check if the product is already on the list , push if it is not
-          var found = this.productList.find(
-            (element) => element.uuid === product.uuid
-          );
-
-          if (!found) {
-            this.productList.push({
-              uuid: product.uuid,
-              title: product.title,
-              description: product.description,
-              price: product.price,
-            });
-          }
+          product.data.forEach((p) => {
+            // check if the product is already on the list , push if it is not
+            var found = this.productList.find(
+              (element) => element.uuid === p.uuid
+            );
+            if (!found) {
+              this.productList.push({
+                uuid: p.uuid,
+                image: p.metadata.image,
+                title: p.title,
+                description: p.brand.title,
+                price: p.price,
+              });
+            }
+          });
         });
       }
     },
